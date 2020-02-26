@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Disastron</string>
+    <string name="home">Home</string>
+    <string name="share_to_facebook">Share to Facebook</string>
+    <string name="emergency_contacts">Emergency Contacts</string>
+    <string name="first_aid">First Aid</string>
+    <string name="settings">Settings</string>
 </resources>
