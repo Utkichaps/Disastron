@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class Settings extends AppCompatActivity {
+public class Settings extends MainActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

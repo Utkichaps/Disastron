@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.mapopt:
                 //setContentView(R.layout.activity_map);
-                Intent intent6 = new Intent(MainActivity.this,MapActivity.class);
+                Intent intent6 = new Intent(this,MapActivity.class);
                 this.startActivity(intent6);
                 break;
             case R.id.facebook:

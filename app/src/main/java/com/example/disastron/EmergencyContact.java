@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class EmergencyContact extends AppCompatActivity {
+public class EmergencyContact extends MainActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
