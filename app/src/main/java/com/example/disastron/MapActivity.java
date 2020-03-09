@@ -30,6 +30,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -61,5 +62,9 @@ public class MapActivity extends MainActivity implements OnMapReadyCallback {
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 17));
         mMap.setMyLocationEnabled(true);
+        mMap.setTrafficEnabled(true);
+        UiSettings mapUiSettings = mMap.getUiSettings();
+        mapUiSettings.setCompassEnabled(true);
+        mapUiSettings.setZoomControlsEnabled(true);
     }
 }
