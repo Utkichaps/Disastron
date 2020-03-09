@@ -11,10 +11,12 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
     int myItemId;
+    DatabaseHelper myDb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myDb = new DatabaseHelper(this);
     }
 
     @Override
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         {
             case R.id.home :
                 //setContentView(R.layout.activity_main);
+<<<<<<< HEAD
                 Intent intent1 = new Intent(this,MainActivity.class);
                 this.startActivity(intent1);
                 break;
