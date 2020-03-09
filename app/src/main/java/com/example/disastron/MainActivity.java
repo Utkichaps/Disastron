@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         {
             case R.id.home :
                 //setContentView(R.layout.activity_main);
-<<<<<<< HEAD
                 Intent intent1 = new Intent(this,MainActivity.class);
                 this.startActivity(intent1);
                 break;
