@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.options,menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -34,30 +34,35 @@ public class MainActivity extends AppCompatActivity {
         {
             case R.id.home :
                 //setContentView(R.layout.activity_main);
-                Intent intent = new Intent(this,MainActivity.class);
-                startActivity(intent);
+<<<<<<< HEAD
+                Intent intent1 = new Intent(this,MainActivity.class);
+                this.startActivity(intent1);
+                break;
+            case R.id.mapopt:
+                //setContentView(R.layout.activity_map);
+                Intent intent6 = new Intent(this,MapActivity.class);
+                this.startActivity(intent6);
                 break;
             case R.id.facebook:
                 //setContentView(R.layout.activity_facebook_share);
-                Intent intent1 = new Intent(this,FacebookShare.class);
-                startActivity(intent1);
+                Intent intent2 = new Intent(this,FacebookShare.class);
+                this.startActivity(intent2);
                 break;
             case R.id.contact:
                 //setContentView(R.layout.activity_emergency_contact);
-                Intent intent2 = new Intent(this,EmergencyContact.class);
-                startActivity(intent2);
+                Intent intent3 = new Intent(this,EmergencyContact.class);
+                this.startActivity(intent3);
                 break;
             case R.id.firstaid:
                 //setContentView(R.layout.activity_first_aid);
-                Intent intent3 = new Intent(this,FirstAid.class);
-                startActivity(intent3);
+                Intent intent4 = new Intent(this,FirstAid.class);
+                this.startActivity(intent4);
                 break;
             case R.id.settings:
                 //setContentView(R.layout.activity_settings);
-                Intent intent4 = new Intent(this,Settings.class);
-                startActivity(intent4);
+                Intent intent5 = new Intent(this,Settings.class);
+                this.startActivity(intent5);
                 break;
-
             default:
                 return super.onOptionsItemSelected(item);
         }
