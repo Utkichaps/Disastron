@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_home"
+            android:title="@string/home" />
+        <item android:id="@+id/nav_map"
+            android:title="@string/mapopt" />
+        <item android:id="@+id/nav_share"
+            android:title="@string/share_to_facebook" />
+        <item android:id="@+id/nav_emergency"
+            android:title="@string/emergency_contacts" />
+    </group>
+
+    <item>
+        <menu>
+            <item android:id="@+id/nav_aid"
+                android:title="@string/first_aid" />
+            <item android:id="@+id/nav_settings"
+                android:title="@string/settings" />
+        </menu>
+    </item>
+
+</menu>

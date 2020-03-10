@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Disastron</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Disastron</string>
+    <string name="nav_header_desc">Navigation header</string>
+
     <string name="home">Home</string>
+    <string name="mapopt">Map</string>
     <string name="share_to_facebook">Share to Facebook</string>
     <string name="emergency_contacts">Emergency Contacts</string>
     <string name="first_aid">First Aid</string>
