@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/markeropt"
-        android:title="Add Marker"
-        />
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/layers"
+        android:title="Layers"
+        android:icon="@drawable/ic_layer"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/norm"
+                android:title="Normal"
+                />
+            <item
+                android:id="@+id/sat"
+                android:title="Satellite"
+                />
+            <item
+                android:id="@+id/ter"
+                android:title="Terrain"
+                />
+            <item
+                android:id="@+id/hyb"
+                android:title="Hybrid"
+                />
+        </menu>
+
+    </item>
+
+
     <item
         android:id="@+id/maptypeopt"
-        android:title="Map Type">
+        android:title="Map Type"
+        android:icon="@drawable/ic_map"
+        app:showAsAction="always">
         <menu>
+            <item
+                android:id="@+id/none"
+                android:title="None"
+                />
             <item
                 android:id="@+id/clou"
                 android:title="Clouds"
@@ -38,5 +67,17 @@
                 />
         </menu>
     </item>
+
+    <item
+        android:id="@+id/hosp"
+        android:title="Hospitals"
+        android:icon="@drawable/ic_hospital"
+        app:showAsAction="always"></item>
+
+    <item
+        android:id="@+id/markeropt"
+        android:title="Add Marker"
+        android:icon="@drawable/ic_pin"
+        app:showAsAction="always"></item>
 
 </menu>

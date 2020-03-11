@@ -35,6 +35,7 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
     int myItemId;
     View view;
     private GoogleMap mMap;
+    LatLng loc;
     private static String OWM_TILE_URL = "https://tile.openweathermap.org/map/%s/%d/%d/%d.png";
     double lat,lon;
     private String tileType = "clouds";
@@ -70,7 +71,7 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         Log.i("Location2:",lat+""+lon);
-        LatLng loc = new LatLng(lat, lon);
+        loc = new LatLng(lat, lon);
         //mMap.addMarker(new MarkerOptions().position(loc).title("Your Location"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 17));
@@ -87,46 +88,82 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
         myItemId =item.getItemId();
         switch (myItemId)
         {
-            case R.id.markeropt:
+            case R.id.norm:
+                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 break;
 
-            case R.id.maptypeopt:
+            case R.id.sat:
+                mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                break;
+
+            case R.id.ter:
+                mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                break;
+
+            case R.id.hyb:
+                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                break;
+
+            case R.id.none:
+                if(tileOver != null)
+                    tileOver.remove();
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 17));
                 break;
 
             case R.id.clou:
-                tileType = "clouds";
-                //tileOver.remove();
+                tileType = "clouds_new";
+                if(tileOver != null)
+                    tileOver.remove();
                 setUpMap();
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
                 break;
 
             case R.id.prec:
-                tileType = "precipitation";
-                tileOver.remove();
+                tileType = "precipitation_new";
+                if(tileOver != null)
+                    tileOver.remove();
                 setUpMap();
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
+                break;
+
+            case R.id.temp:
+                tileType = "temp_new";
+                if(tileOver != null)
+                    tileOver.remove();
+                setUpMap();
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
                 break;
 
             case R.id.snow:
                 tileType = "snow";
-                tileOver.remove();
+                if(tileOver != null)
+                    tileOver.remove();
                 setUpMap();
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
                 break;
 
             case R.id.rain:
                 tileType = "rain";
-                tileOver.remove();
+                if(tileOver != null)
+                    tileOver.remove();
                 setUpMap();
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
                 break;
 
             case R.id.wind:
                 tileType = "wind";
-                tileOver.remove();
+                if(tileOver != null)
+                    tileOver.remove();
                 setUpMap();
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
                 break;
 
             case R.id.pres:
-                tileType = "pressure";
-                tileOver.remove();
+                tileType = "pressure_new";
+                if(tileOver != null)
+                    tileOver.remove();
                 setUpMap();
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
                 break;
         }
         return true;
