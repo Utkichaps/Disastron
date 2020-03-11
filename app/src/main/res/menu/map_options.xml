@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/markeropt"
+        android:title="Add Marker"
+        />
+    <item
+        android:id="@+id/maptypeopt"
+        android:title="Map Type">
+        <menu>
+            <item
+                android:id="@+id/clou"
+                android:title="Clouds"
+                />
+            <item
+                android:id="@+id/temp"
+                android:title="Temperature"
+                />
+            <item
+                android:id="@+id/prec"
+                android:title="Precipitation"
+                />
+            <item
+                android:id="@+id/snow"
+                android:title="Snow"
+                />
+            <item
+                android:id="@+id/rain"
+                android:title="Rain"
+                />
+            <item
+                android:id="@+id/wind"
+                android:title="Wind"
+                />
+            <item
+                android:id="@+id/pres"
+                android:title="Pressure"
+                />
+        </menu>
+    </item>
+
+</menu>
