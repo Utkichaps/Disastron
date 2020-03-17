@@ -1,4 +1,4 @@
-package com.example.kunal.disastron;
+package com.example.disastron;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
