@@ -35,11 +35,13 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
     int myItemId;
     View view;
     private GoogleMap mMap;
+    String Hospital = "hospital";
     LatLng loc;
     private static String OWM_TILE_URL = "https://tile.openweathermap.org/map/%s/%d/%d/%d.png";
     double lat,lon;
     private String tileType = "clouds";
     private TileOverlay tileOver;
+    private int PROXIMITY_RADIUS = 10000;
 
     public map_fragment(double la, double lo) {
         lat = la;
@@ -83,11 +85,40 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
         mapUiSettings.setZoomControlsEnabled(true);
     }
 
+    public void HospitalClicked()
+    {
+        mMap.clear();
+        String url = getUrl(lat, lon, Hospital);
+        Object[] DataTransfer = new Object[2];
+        DataTransfer[0] = mMap;
+        DataTransfer[1] = url;
+        Log.d("onClick", url);
+        GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData(lat,lon);
+        getNearbyPlacesData.execute(DataTransfer);
+        Toast.makeText(getContext(),"Nearby Hospitals", Toast.LENGTH_LONG).show();
+    }
+
+    private String getUrl(double latitude, double longitude, String nearbyPlace) {
+
+        StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+        googlePlacesUrl.append("location=" + latitude + "," + longitude);
+        googlePlacesUrl.append("&radius=" + PROXIMITY_RADIUS);
+        googlePlacesUrl.append("&type=" + nearbyPlace);
+        googlePlacesUrl.append("&sensor=true");
+        googlePlacesUrl.append("&key=" + "AIzaSyCGebJhS00UuJTvtAGt-xIkPGVUy8nHY5k");
+        Log.d("getUrl", googlePlacesUrl.toString());
+        return (googlePlacesUrl.toString());
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         myItemId =item.getItemId();
         switch (myItemId)
         {
+            case R.id.hosp:
+                HospitalClicked();
+                break;
+
             case R.id.norm:
                 mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 break;
