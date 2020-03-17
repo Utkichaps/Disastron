@@ -1,4 +1,4 @@
-package com.example.kunal.disastron;
+package com.example.disastron;
 
 import android.os.Bundle;
 import androidx.annotation.Nullable;
