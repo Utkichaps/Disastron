@@ -13,4 +13,5 @@
         android:id="@+id/map"
         tools:context=".MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
