@@ -6,15 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="168dp"
-        android:layout_height="96dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="296dp"
-        android:layout_marginEnd="47dp"
-        android:text="@string/share_to_facebook"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/FBLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="98dp"
+        android:layout_marginLeft="98dp"
+        android:layout_marginTop="352dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

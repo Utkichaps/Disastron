@@ -11,4 +11,7 @@
     <string name="emergency_contacts">Emergency Contacts</string>
     <string name="first_aid">First Aid</string>
     <string name="settings">Settings</string>
+    <string name="facebook_app_id">159642972126354</string>
+    <string name="fb_login_protocol_scheme">fb159642972126354</string>
+
 </resources>
