@@ -78,6 +78,17 @@
         android:id="@+id/markeropt"
         android:title="Add Marker"
         android:icon="@drawable/ic_pin"
-        app:showAsAction="always"></item>
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/add"
+                android:title="Add Marker"
+                />
+            <item
+                android:id="@+id/del"
+                android:title="Delete Marker"
+                />
+        </menu>
+    </item>
 
 </menu>

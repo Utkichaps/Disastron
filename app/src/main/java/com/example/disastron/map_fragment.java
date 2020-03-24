@@ -1,5 +1,7 @@
 package com.example.disastron;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -37,6 +39,8 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
     private String tileType = "clouds";
     private TileOverlay tileOver;
     private int PROXIMITY_RADIUS = 10000;
+    private static String uniqueID = null;
+    private static final String PREF_UNIQUE_ID = "PREF_UNIQUE_ID";
 
     public map_fragment(double la, double lo) {
         lat = la;
@@ -48,6 +52,10 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         setHasOptionsMenu(true);
+
+        SharedPreferences sharedPrefs = getContext().getSharedPreferences(
+                PREF_UNIQUE_ID, Context.MODE_PRIVATE);
+        uniqueID = sharedPrefs.getString(PREF_UNIQUE_ID, null);
 
         SupportMapFragment mMapFragment = SupportMapFragment.newInstance();
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
@@ -105,11 +113,23 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
         return (googlePlacesUrl.toString());
     }
 
+    public void MarkerAdd() {
+        AddMarker addm = new AddMarker(lat,lon,uniqueID);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_frame,addm,"findThisFrag")
+                .addToBackStack(null)
+                .commit();
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         myItemId =item.getItemId();
         switch (myItemId)
         {
+            case R.id.add:
+                MarkerAdd();
+                break;
+
             case R.id.hosp:
                 HospitalClicked();
                 break;
