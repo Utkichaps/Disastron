@@ -1,6 +1,8 @@
 package com.example.disastron;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -23,10 +25,21 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.gms.maps.model.TileProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class map_fragment extends Fragment implements OnMapReadyCallback {
     int myItemId;
@@ -34,17 +47,35 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     String Hospital = "hospital";
     LatLng loc;
+    DatabaseReference dreff;
     private static String OWM_TILE_URL = "https://tile.openweathermap.org/map/%s/%d/%d/%d.png";
     double lat,lon;
     private String tileType = "clouds";
     private TileOverlay tileOver;
     private int PROXIMITY_RADIUS = 10000;
     private static String uniqueID = null;
+    private String ID;
+    int flag;
     private static final String PREF_UNIQUE_ID = "PREF_UNIQUE_ID";
 
     public map_fragment(double la, double lo) {
         lat = la;
         lon = lo;
+    }
+
+    public synchronized static String id(Context context) {
+        if (uniqueID == null) {
+            SharedPreferences sharedPrefs = context.getSharedPreferences(
+                    PREF_UNIQUE_ID, Context.MODE_PRIVATE);
+            uniqueID = sharedPrefs.getString(PREF_UNIQUE_ID, null);
+            if (uniqueID == null) {
+                uniqueID = UUID.randomUUID().toString();
+                SharedPreferences.Editor editor = sharedPrefs.edit();
+                editor.putString(PREF_UNIQUE_ID, uniqueID);
+                editor.commit();
+            }
+        }
+        return uniqueID;
     }
 
     @Nullable
@@ -53,16 +84,16 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
 
         setHasOptionsMenu(true);
 
-        SharedPreferences sharedPrefs = getContext().getSharedPreferences(
-                PREF_UNIQUE_ID, Context.MODE_PRIVATE);
-        uniqueID = sharedPrefs.getString(PREF_UNIQUE_ID, null);
-
+        ID = id(getContext());
         SupportMapFragment mMapFragment = SupportMapFragment.newInstance();
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.map, mMapFragment);
         fragmentTransaction.commit();
         mMapFragment.getMapAsync(this);
         view = inflater.inflate(R.layout.layout_map, container, false);
+
+        dreff = FirebaseDatabase.getInstance().getReference().child("Pinlocation");
+
         return view;
     }
 
@@ -86,6 +117,30 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
         UiSettings mapUiSettings = mMap.getUiSettings();
         mapUiSettings.setCompassEnabled(true);
         mapUiSettings.setZoomControlsEnabled(true);
+
+        dreff.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                flag = 0;
+                MarkerOptions markerOptions = new MarkerOptions();
+
+                for(DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
+                    Pinlocation pl = childSnapshot.getValue(Pinlocation.class);
+                    LatLng latLng = new LatLng(pl.getLatitude(),pl.getLongitude());
+                    markerOptions.position(latLng);
+                    markerOptions.title("Help");
+                    markerOptions.snippet(pl.getDescription());
+                    mMap.addMarker(markerOptions);
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void HospitalClicked()
@@ -114,11 +169,36 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
     }
 
     public void MarkerAdd() {
-        AddMarker addm = new AddMarker(lat,lon,uniqueID);
+        AddMarker addm = new AddMarker(lat,lon,ID);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame,addm,"findThisFrag")
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public void MarkerDel() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Are you sure you want to delete your marker?");
+        builder.setTitle("Alert");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                DelMarker delm = new DelMarker(ID);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame,delm,"findThisFrag2")
+                        .addToBackStack(null)
+                        .commit();
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override
@@ -126,6 +206,10 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
         myItemId =item.getItemId();
         switch (myItemId)
         {
+            case R.id.del:
+                MarkerDel();
+                break;
+
             case R.id.add:
                 MarkerAdd();
                 break;

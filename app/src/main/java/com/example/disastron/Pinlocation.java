@@ -38,6 +38,6 @@ public class Pinlocation {
     }
 
     public void setUniqueID(String uniqueID) {
-        UniqueID = uniqueID;
+        this.UniqueID = uniqueID;
     }
 }

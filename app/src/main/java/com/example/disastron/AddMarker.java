@@ -2,6 +2,8 @@ package com.example.disastron;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -11,8 +13,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+/**
+ * FIGURE OUT A WAY TO STORE UNIQUE KEYS
+ */
 
 public class AddMarker extends Fragment {
 
@@ -23,6 +31,7 @@ public class AddMarker extends Fragment {
     DatabaseReference dreff;
     EditText editText;
     Pinlocation pinloc;
+    int flag;
 
     public AddMarker(double la, double lo,String ID) {
         lat = la;
@@ -34,6 +43,7 @@ public class AddMarker extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dreff = FirebaseDatabase.getInstance().getReference().child("Pinlocation");
+        flag = 0;
     }
 
     @Override
@@ -45,6 +55,23 @@ public class AddMarker extends Fragment {
         button = view.findViewById(R.id.button2);
         button2 = view.findViewById(R.id.button3);
         pinloc = new Pinlocation();
+        dreff.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
+                    Pinlocation pl = childSnapshot.getValue(Pinlocation.class);
+                    if(pl.getUniqueID().equals(UID)) {
+                        flag = 1;
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +84,22 @@ public class AddMarker extends Fragment {
                     pinloc.setLatitude(lat);
                     pinloc.setLongitude(lon);
                     pinloc.setUniqueID(UID);
-                    dreff.push().setValue(pinloc);
+                    if(flag == 0) {
+                        dreff.push().setValue(pinloc, new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                                if (databaseError != null) {
+                                    Toast.makeText(getContext(), databaseError.toString(), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    getFragmentManager().popBackStack();
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        Toast.makeText(getContext(), "You have already placed a pin! Please remove your pin and" +
+                                " try again.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
