@@ -4,11 +4,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
@@ -206,6 +208,14 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
         myItemId =item.getItemId();
         switch (myItemId)
         {
+            case R.id.reset:
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                if (Build.VERSION.SDK_INT >= 26) {
+                    ft.setReorderingAllowed(false);
+                }
+                ft.detach(this).attach(this).commit();
+                break;
+
             case R.id.del:
                 MarkerDel();
                 break;
@@ -237,7 +247,7 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
             case R.id.none:
                 if(tileOver != null)
                     tileOver.remove();
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 17));
+                //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 17));
                 break;
 
             case R.id.clou:
@@ -245,7 +255,7 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
                 if(tileOver != null)
                     tileOver.remove();
                 setUpMap();
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
+                //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
                 break;
 
             case R.id.prec:
@@ -253,7 +263,7 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
                 if(tileOver != null)
                     tileOver.remove();
                 setUpMap();
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
+                //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
                 break;
 
             case R.id.temp:
@@ -261,7 +271,7 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
                 if(tileOver != null)
                     tileOver.remove();
                 setUpMap();
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
+                //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
                 break;
 
             case R.id.snow:
@@ -269,7 +279,7 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
                 if(tileOver != null)
                     tileOver.remove();
                 setUpMap();
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
+                //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
                 break;
 
             case R.id.rain:
@@ -277,7 +287,7 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
                 if(tileOver != null)
                     tileOver.remove();
                 setUpMap();
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
+                //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
                 break;
 
             case R.id.wind:
@@ -285,7 +295,7 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
                 if(tileOver != null)
                     tileOver.remove();
                 setUpMap();
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
+                //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
                 break;
 
             case R.id.pres:
@@ -293,7 +303,7 @@ public class map_fragment extends Fragment implements OnMapReadyCallback {
                 if(tileOver != null)
                     tileOver.remove();
                 setUpMap();
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
+                //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
                 break;
         }
         return true;
