@@ -16,6 +16,8 @@
 
     <item>
         <menu>
+            <item android:id="@+id/getdatarefresh"
+                android:title="@string/get_disaster_data" />
             <item android:id="@+id/nav_aid"
                 android:title="@string/first_aid" />
             <item android:id="@+id/nav_settings"
