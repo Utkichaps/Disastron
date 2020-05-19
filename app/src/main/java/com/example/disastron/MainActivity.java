@@ -2,6 +2,8 @@ package com.example.disastron;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -33,6 +35,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -46,8 +50,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -63,6 +65,25 @@ public class MainActivity extends AppCompatActivity
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
+
+        //Here we can go to a function that gets state data and passes it as intent to alarmreceiver.
+
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("Latitude", lat);
+        intent.putExtra("Longitude", lon);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 234324243, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 7); //Set time of notification/data retrieval
+        calendar.set(Calendar.MINUTE, 30);
+        calendar.set(Calendar.SECOND, 0);
+        long startUpTime = calendar.getTimeInMillis();
+        if (System.currentTimeMillis() > startUpTime) {
+            startUpTime = startUpTime + 24*60*60*1000;
+        }
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+                startUpTime, AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
     @Override
@@ -87,15 +108,28 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
             fm.beginTransaction().replace(R.id.content_frame, new home_fragment()).commit();
-        } else if (id == R.id.nav_map) {
+        }
+        else if (id == R.id.nav_map) {
             fm.beginTransaction().replace(R.id.content_frame, new map_fragment(lat,lon)).commit();
-        } else if (id == R.id.nav_share) {
+        }
+        else if (id == R.id.nav_share) {
             fm.beginTransaction().replace(R.id.content_frame, new share_fragment()).commit();
-        } else if (id == R.id.nav_emergency) {
+        }
+        else if (id == R.id.nav_emergency) {
             fm.beginTransaction().replace(R.id.content_frame, new emergency_fragment()).commit();
-        } else if (id == R.id.nav_aid) {
+        }
+        else if (id == R.id.getdatarefresh) {
+            Intent intent2 = new Intent(this, AlarmReceiver.class);
+            intent2.putExtra("Latitude", lat);
+            intent2.putExtra("Longitude", lon);
+            PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, 234324244, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
+            AlarmManager alarmManager2 = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+            alarmManager2.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (5000), pendingIntent2); //7 seconds after pressing the button
+        }
+        else if (id == R.id.nav_aid) {
             fm.beginTransaction().replace(R.id.content_frame, new aid_fragment()).commit();
-        } else if (id == R.id.nav_settings) {
+        }
+        else if (id == R.id.nav_settings) {
             fm.beginTransaction().replace(R.id.content_frame, new settings_fragment()).commit();
         }
 
