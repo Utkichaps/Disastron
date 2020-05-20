@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 7); //Set time of notification/data retrieval
-        calendar.set(Calendar.MINUTE, 30);
+        calendar.set(Calendar.HOUR_OF_DAY, 10); //Set time of notification/data retrieval
+        calendar.set(Calendar.MINUTE, 10);
         calendar.set(Calendar.SECOND, 0);
         long startUpTime = calendar.getTimeInMillis();
         if (System.currentTimeMillis() > startUpTime) {
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity
             intent2.putExtra("Longitude", lon);
             PendingIntent pendingIntent2 = PendingIntent.getBroadcast(this, 234324244, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager alarmManager2 = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-            alarmManager2.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (5000), pendingIntent2); //7 seconds after pressing the button
+            alarmManager2.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (1000), pendingIntent2); //7 seconds after pressing the button
         }
         else if (id == R.id.nav_aid) {
             fm.beginTransaction().replace(R.id.content_frame, new aid_fragment()).commit();
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @SuppressLint("MissingPermission")
-    private void getLastLocation(){
+    public void getLastLocation(){
         if (checkPermissions()) {
             if (isLocationEnabled()) {
                 mFusedLocationClient.getLastLocation().addOnCompleteListener(

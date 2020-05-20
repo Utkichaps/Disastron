@@ -23,6 +23,7 @@ public class AlertsReceiver extends AsyncTask<Object,String,String>{
 
     double lat;
     double lon;
+    public String finalstate;
     ArrayList<String> DailyAlerts;
 
     public AlertsReceiver(double lat, double lon) {
@@ -51,6 +52,7 @@ public class AlertsReceiver extends AsyncTask<Object,String,String>{
 
         DataParser dataParser = new DataParser();
         String state = dataParser.getStateFromJson(GeocodeData);
+        finalstate = state;
         Log.d("CurrentState",state);
         ArrayList<String> Alerts = new ArrayList<String>();
         try {
@@ -106,7 +108,7 @@ public class AlertsReceiver extends AsyncTask<Object,String,String>{
 
         for(int i=2;i<=4;i++)
         {
-            String[] sentences = dates[i].toString().split("\\.");
+            String[] sentences = dates[i].split("\\.");
             String state = currstate;
             String tdate = null;
 

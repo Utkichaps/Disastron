@@ -39,20 +39,43 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
         ArrayList<String> Alerts = new ArrayList<String>();
         Alerts = ar.DailyAlerts;
+        String today = "", tomorrow;
+        String state = ar.finalstate;
+        Log.d("TESTSTATE",state);
         for(String alert: Alerts) {
             Log.d("ShowAlerts",alert);
+            String[] sent = alert.split(":");
+            if(sent[0].equals("today")) {
+                String[] data_str = sent[1].split(";");
+                for(String data: data_str) {
+                    if(data.contains(state)) {
+                        today += data;
+                    }
+                }
+            }
         }
-
+        Log.d("TESTTODAY",today);
         //Or if needed we can retrieve state data here as well
         con = context;
         createNotificationChannel();
-        builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.notification_icon)
-                .setContentTitle("Alert!")
-                //.setContentText("There is a storm brewing!")
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("Your coordinates:"+Double.toString(lat)+","+Double.toString(lon)))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        if(today.equals("")) {
+            builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                    .setSmallIcon(R.drawable.notification_icon)
+                    .setContentTitle("Alert!")
+                    //.setContentText("There is a storm brewing!")
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText("No warnings today!"))
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        }
+        else {
+            builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                    .setSmallIcon(R.drawable.notification_icon)
+                    .setContentTitle("Alert!")
+                    //.setContentText("There is a storm brewing!")
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText("Warnings today: "+today))
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        }
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         notificationManager.notify(1, builder.build());
     }
