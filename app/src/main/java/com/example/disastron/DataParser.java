@@ -14,6 +14,7 @@ import java.util.List;
  * Created by navneet on 23/7/16.
  */
 public class DataParser {
+
     public List<HashMap<String, String>> parse(String jsonData) {
         JSONArray jsonArray = null;
         JSONObject jsonObject;
@@ -80,5 +81,27 @@ public class DataParser {
             e.printStackTrace();
         }
         return googlePlaceMap;
+    }
+
+    public String getStateFromJson(String jsondata) {
+
+        String state = "";
+        try
+        {
+            JSONObject jsonobject = new JSONObject((String) jsondata);
+            JSONArray jsonarray = jsonobject.getJSONArray("results");
+            jsonobject = jsonarray.getJSONObject(0);
+            jsonarray = jsonobject.getJSONArray("address_components");
+            int arrlen = jsonarray.length();
+            jsonobject = jsonarray.getJSONObject(arrlen-3);
+
+            state = jsonobject.getString("long_name");
+        } catch (Exception e) {
+            Log.d("State", "State Parsing error");
+            e.printStackTrace();
+        }
+
+        return state;
+
     }
 }
