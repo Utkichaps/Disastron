@@ -11,6 +11,12 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.disastron.AlertsReceiver;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
 public class AlarmReceiver extends BroadcastReceiver {
     String CHANNEL_ID = "DisastronAlert";
     NotificationCompat.Builder builder;
@@ -22,6 +28,21 @@ public class AlarmReceiver extends BroadcastReceiver {
         double lon = intent.getDoubleExtra("Longitude",0);
         Log.i("Coordinate",Double.toString(lat));
         Log.i("Coordinate",Double.toString(lon));
+
+        AlertsReceiver ar = new AlertsReceiver(lat,lon);
+        try {
+            ar.execute().get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ArrayList<String> Alerts = new ArrayList<String>();
+        Alerts = ar.DailyAlerts;
+        for(String alert: Alerts) {
+            Log.d("ShowAlerts",alert);
+        }
+
         //Or if needed we can retrieve state data here as well
         con = context;
         createNotificationChannel();
