@@ -6,7 +6,7 @@ Disastron is a Disaster Management Android Application, built with active disast
 - Active disaster prediction notifications fetched from NDMA database based on your location.
 - Social Media support to share disaster alert to people in the affected area.
 - Community based disaster tracking by pin pointing location on Shared Map.
-- Crucial Disaster prevention information available in the application.
+- Crucial disaster management information available in the application.
 
 
 ## Code Details
