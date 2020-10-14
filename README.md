@@ -25,7 +25,8 @@ The app was built using Android Studio SDK.
 
 ### Menu
 
-The menu can be seen in the following image
+The menu can be seen in the following image:       
+
 <img src="R_images/menu.jpeg">
 
 ### Map
