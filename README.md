@@ -1,6 +1,6 @@
 # Disastron - A disaster Management application for India
 
-<img src="R_images/Earth.png" width="50" height="50"/>
+<img src="R_images/Earth.png">
 
 ## Introduction
 
@@ -32,7 +32,7 @@ The menu can be seen in the following image
 
 The map has multiple features which are going to be highlighted below:    
 
-<img src="R_images/map.png">
+<img src="R_images/map.PNG">
 
 The icons from left to right are:
 
