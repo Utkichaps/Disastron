@@ -1,14 +1,14 @@
 {
   "project_info": {
-    "project_number": "820656245864",
-    "firebase_url": "https://disastron-1c8f0.firebaseio.com",
-    "project_id": "disastron-1c8f0",
-    "storage_bucket": "disastron-1c8f0.appspot.com"
+    "project_number": "<PROJECT_NO>",
+    "firebase_url": "<FIREBASE_URL>",
+    "project_id": "<PROJECT_ID>",
+    "storage_bucket": "<PROJECT_BUCKET>"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:820656245864:android:bf1864fc5de0ab2b0dffdd",
+        "mobilesdk_app_id": "<APP_ID>",
         "android_client_info": {
           "package_name": "com.example.disastron"
         }
@@ -21,7 +21,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAa2GttApslp6yWEo26vmhB4Ix2mE28oIE"
+          "current_key": "<API_KEY>"
         }
       ],
       "services": {
