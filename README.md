@@ -1,4 +1,4 @@
-# Disastron - A disaster Management application for India
+# Disastron - A Disaster Management Application for India
 
 <img src="R_images/Earth.png">
 
@@ -19,7 +19,8 @@ The app was built using Android Studio SDK.
 2. Information regarding your current location is scraped from the NDMA Database.
 3. Google Maps API to spread disaster location on Shared Community Map.
 4. Facebook API to support push notifications to the people in the affected area.
-5. Offline information available for severe conditions with no connectivity.
+5. Openweather API for live weather maps
+6. Offline information available for severe conditions with no connectivity.
 
 ## Application features
 
